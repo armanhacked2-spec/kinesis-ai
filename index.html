@@ -312,4 +312,36 @@ function wrapText(text, x, y, maxWidth, lineHeight) {
             clearInterval(anim);
         }
     }, 100);
-}
+}<script>
+const btn = document.getElementById("generateBtn");
+
+btn.addEventListener("click", function () {
+
+    const canvas = document.getElementById("previewCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = 900;
+    canvas.height = 500;
+
+    let x = 0;
+
+    function animate() {
+
+        ctx.fillStyle = "black";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        ctx.fillStyle = "#00f2ff";
+        ctx.fillRect(x,200,150,150);
+
+        ctx.fillStyle = "white";
+        ctx.font = "30px Arial";
+        ctx.fillText("AI VIDEO GENERATING...",200,100);
+
+        x += 5;
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+});
+</script>
