@@ -206,3 +206,82 @@
 
         <div class="control-group">  
             <label class="label">Audio Style</label>
+<select id="audioStyle">
+    <option value="cinematic">Cinematic Voice</option>
+    <option value="deep">Deep Voice</option>
+    <option value="robotic">Robotic</option>
+    <option value="emotional">Emotional</option>
+    <option value="anime">Anime Style</option>
+</select>
+</div>
+
+<button class="btn btn-primary" onclick="generateVideo()">
+    Generate AI Video
+</button>
+
+<button class="btn btn-secondary" onclick="downloadVideo()">
+    Download
+</button>
+
+</div>
+
+<!-- Preview Area -->
+<div class="preview-area">
+    <canvas id="previewCanvas" width="1280" height="720"></canvas>
+
+    <div class="generating-overlay" id="overlay">
+        <div class="status-text">Generating AI Video...</div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+const canvas = document.getElementById('previewCanvas');
+const ctx = canvas.getContext('2d');
+
+function drawScene(text, category) {
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradient.addColorStop(0, "#7000ff");
+    gradient.addColorStop(1, "#00f2ff");
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 48px Arial";
+    ctx.textAlign = "center";
+
+    wrapText(text, canvas.width / 2, canvas.height / 2, 900, 60);
+
+    ctx.font = "24px Arial";
+    ctx.fillText(category.toUpperCase(), canvas.width / 2, 100);
+}
+
+function wrapText(text, x, y, maxWidth, lineHeight) {
+    const words = text.split(' ');
+    let line = '';
+    let lines = [];
+
+    for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = ctx.measureText(testLine);
+        const testWidth = metrics.width;
+
+        if (testWidth > maxWidth && n > 0) {
+            lines.push(line);
+            line = words[n] + ' ';
+        } else {
+            line = testLine;
+        }
+    }
+
+    lines.push(line);
+
+    for (let i = 0; i < lines.length;
